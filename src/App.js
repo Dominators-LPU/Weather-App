@@ -5,7 +5,9 @@ const App = () => {
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
   const [hemisphere, setHemisphere] = useState("")
-  const [month, setMonth] = useState(new Date().getMonth())
+  const [month, setMonth] = useState()
+
+  console.log(month)
 
   useEffect(() => {
          if(navigator.geolocation){
@@ -24,12 +26,29 @@ const App = () => {
                         }
                 })
          }
+         let date = new Date()
+         setMonth(date.getMonth())
   },[])
 
   return(
         <div> 
-              <h1> {latitude}, {longitude}</h1>
-              <h2> {hemisphere}</h2>
+              {/* <h1>Latitude: {latitude}</h1>
+              <h1>Longitude: {longitude}</h1>
+              <h1>Hemisphere: {hemisphere}</h1>
+              <h1>Month: {month}</h1> */}
+
+
+              {
+                 hemisphere && month && (
+                  <div>
+                     {
+                        (hemisphere=="Northen Hemisphere" && 2<=month<=9)||(hemisphere=="Southern Hemisphere" && month<2 || month>9)?(<h1>Summer Season</h1>) : (<h1>Winter Season</h1>)
+
+                     }
+                  </div>
+                 )
+
+              }
         </div>
   )
 }
